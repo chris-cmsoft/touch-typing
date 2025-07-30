@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, useTemplateRef, onMounted } from 'vue'
 import { targetTexts } from '@/data/targetTexts'
 
 type Status = 'correct' | 'incorrect' | 'fixed'
@@ -16,6 +16,15 @@ const targetText = ref(targetTexts[index.value])
 const userInput = ref('')
 const typedCharacters = ref<CharStatus[]>([])
 const targetChars = ref(targetText.value.split(''))
+const typingInput = useTemplateRef('typing-input')
+
+onMounted(() => {
+    focusInput()
+})
+
+function focusInput() {
+    typingInput.value?.focus()
+}
 
 function nextIndex(): number {
     return (index.value + 1) % targetTexts.length
@@ -62,7 +71,7 @@ function reset() {
 <template>
     <div class="max-w-2xl mx-auto mt-10 p-6 border border-gray-300 rounded-lg bg-white shadow">
         <h2 class="text-2xl font-medium mb-6">Typing Practice</h2>
-        <div class="text-xl font-mono font-light mb-6">
+        <div class="text-xl font-mono font-light">
             <span
                 v-for="(char, idx) in targetChars"
                 :key="idx"
@@ -82,8 +91,10 @@ function reset() {
         <input
             v-model="userInput"
             @input="onInputChange"
+            @blur="focusInput"
+            ref="typing-input"
             type="text"
-            class="w-full text-lg p-2 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            class="opacity-0 h-0 w-0 absolute top-0 left-0"
             :maxlength="targetText.length"
             placeholder="Start typing..."
             autofocus
