@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, useTemplateRef, onMounted } from 'vue'
+import { ref, watch, useTemplateRef, onMounted } from 'vue';
 import { targetTexts } from '@/data/targetTexts'
 
 type Status = 'correct' | 'incorrect' | 'fixed'
