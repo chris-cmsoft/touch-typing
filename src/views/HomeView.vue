@@ -60,11 +60,13 @@ function onInputChange() {
         </div>
         <input
             v-model="userInput"
-            @keyup="onInputChange"
+            @input="onInputChange"
             type="text"
             class="w-full text-lg p-2 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             :maxlength="targetText.length"
             placeholder="Start typing..."
+            autofocus
+            autocomplete="off"
         />
     </div>
 </template>
