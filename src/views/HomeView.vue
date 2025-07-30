@@ -14,11 +14,9 @@ const targetChars = targetText.split('')
             <span
                 v-for="(char, idx) in targetChars"
                 :key="idx"
-                class="whitespace-pre-wrap"
                 :class="{
-                    'text-green-600': userInput[idx] === char,
-                    'text-red-600': userInput[idx] !== char && userInput[idx] !== undefined,
-                    'text-black': userInput[idx] === undefined,
+                    'bg-green-200': userInput[idx] === char,
+                    'bg-red-200': userInput[idx] !== char && userInput[idx] !== undefined,
                 }"
                 >{{ char }}</span
             >
