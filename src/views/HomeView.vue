@@ -13,7 +13,7 @@ const userInput = ref('')
 const typedCharacters = ref<CharStatus[]>([])
 const targetChars = targetText.split('')
 
-function onInputChange(e: Event) {
+function onInputChange() {
     for (let i = 0; i < userInput.value.length; i++) {
         let state: Status
         if (targetChars[i] === userInput.value[i]) {
@@ -46,9 +46,13 @@ function onInputChange(e: Event) {
                 v-for="(char, idx) in targetChars"
                 :key="idx"
                 :class="{
-                    'bg-green-200': typedCharacters[idx]?.state === 'correct',
-                    'bg-amber-200': typedCharacters[idx]?.state === 'fixed',
-                    'bg-red-200': typedCharacters[idx]?.state === 'incorrect',
+                    ...(userInput.length > idx
+                        ? {
+                              'bg-green-200': typedCharacters[idx]?.state === 'correct',
+                              'bg-amber-200': typedCharacters[idx]?.state === 'fixed',
+                              'bg-red-200': typedCharacters[idx]?.state === 'incorrect',
+                          }
+                        : {}),
                     'border-b-2 border-b-blue-500': userInput.length == idx,
                 }"
                 >{{ char }}</span
