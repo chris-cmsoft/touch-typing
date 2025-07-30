@@ -9,15 +9,16 @@ interface CharStatus {
     state: Status
 }
 
-const targetText = targetTexts[Math.floor(Math.random() * targetTexts.length)]
+const currentIndex = ref(Math.floor(Math.random() * targetTexts.length))
+const targetText = ref(targetTexts[currentIndex.value])
 const userInput = ref('')
 const typedCharacters = ref<CharStatus[]>([])
-const targetChars = targetText.split('')
+const targetChars = ref(targetText.value.split(''))
 
-function onInputChange() {
+function onInputChange(e: Event) {
     for (let i = 0; i < userInput.value.length; i++) {
         let state: Status
-        if (targetChars[i] === userInput.value[i]) {
+        if (targetChars.value[i] === userInput.value[i]) {
             state = 'correct'
         } else {
             state = 'incorrect'
@@ -34,6 +35,18 @@ function onInputChange() {
             }
             typedCharacters.value[i] = { char: userInput.value[i], state }
         }
+    }
+}
+
+function onEnter() {
+    // If Enter is pressed and all text is entered, go to next text
+    if (userInput.value.length === targetText.value.length) {
+        // Move to next index, wrap around if needed
+        currentIndex.value = (currentIndex.value + 1) % targetTexts.length
+        targetText.value = targetTexts[currentIndex.value]
+        targetChars.value = targetText.value.split('')
+        userInput.value = ''
+        typedCharacters.value = []
     }
 }
 </script>
@@ -61,6 +74,7 @@ function onInputChange() {
         <input
             v-model="userInput"
             @input="onInputChange"
+            @keyup.enter="onEnter"
             type="text"
             class="w-full text-lg p-2 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             :maxlength="targetText.length"
