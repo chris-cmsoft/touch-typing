@@ -30,13 +30,3 @@ const targetChars = targetText.split('')
         />
     </div>
 </template>
-
-<style scoped>
-@reference '@/assets/main.css';
-
-html,
-body {
-    font-family: var(--font-sans);
-    @apply bg-gray-100;
-}
-</style>
