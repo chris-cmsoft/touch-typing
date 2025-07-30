@@ -8,9 +8,13 @@ const highlightedText = computed(() => {
     return targetText
         .split('')
         .map((char, idx) => {
-            const isCorrect = userInput.value[idx] === char
-            // Use Tailwind classes for color
-            return `<span class=\"${isCorrect ? 'text-green-600' : 'text-black'}\">${char}</span>`
+            if (userInput.value[idx] === undefined) {
+                return `<span class=\"text-black\">${char}</span>`
+            }
+            if (userInput.value[idx] === char) {
+                return `<span class=\"text-green-600\">${char}</span>`
+            }
+            return `<span class=\"text-red-600\">${char}</span>`
         })
         .join('')
 })
