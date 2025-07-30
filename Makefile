@@ -16,21 +16,12 @@ help: ## Display this concise help, ie only the porcelain target.
 help-all: ## Display all help items, ie including plumbing targets.
 	@awk 'BEGIN {FS = ":.*#"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?#/ { printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-maintain:  ## Performs regular updates that may be required
-	@yes | npx update-browserslist-db@latest
-	@npm run lint
-
-check-version:  ## Check node version is satisfactory
-	@bash -c '[ "$$(printf "%s\n" 21.0.0 "$$(node -v | sed "s/^v//")" | sort -V | head -n1)" = "21.0.0" ] || (echo "Node.js too old" >&2; exit 1)'
-
+##@ Development
 install:  ## Install node packages what's required
 	@npm i
 
 dev:  ## Run development server
 	@npm run dev
-
-build:  ## Build
-	@npm run build
 
 check:  ## Type Check
 	@npm run type-check
@@ -40,3 +31,14 @@ lint:  ## Lint
 	
 format:  ## Format
 	@npm run format
+
+pretty:  lint format ## Lint & Format
+
+##@ Build
+build:  ## Build
+	@npm run build
+
+preview: build  ## Preview build
+	@npm run preview
+
+
