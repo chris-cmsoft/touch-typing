@@ -1,30 +1,27 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 const targetText = 'Giant pandas live in the temperate zone bamboo forests of central China.'
 const userInput = ref('')
 
-const highlightedText = computed(() => {
-    return targetText
-        .split('')
-        .map((char, idx) => {
-            if (userInput.value[idx] === undefined) {
-                return `<span class=\"text-black\">${char}</span>`
-            }
-            if (userInput.value[idx] === char) {
-                return `<span class=\"text-green-600\">${char}</span>`
-            }
-            return `<span class=\"text-red-600\">${char}</span>`
-        })
-        .join('')
-})
+const targetChars = targetText.split('')
 </script>
 
 <template>
     <div class="max-w-2xl mx-auto mt-10 p-6 border border-gray-300 rounded-lg bg-white shadow">
         <h2 class="text-2xl font-bold mb-6">Typing Practice</h2>
-        <div class="text-xl font-mono mb-6">
-            <span v-html="highlightedText"></span>
+        <div class="text-xl font-mono mb-6 flex flex-wrap gap-0.5">
+            <span
+                v-for="(char, idx) in targetChars"
+                :key="idx"
+                class="whitespace-pre-wrap"
+                :class="{
+                    'text-green-600': userInput[idx] === char,
+                    'text-red-600': userInput[idx] !== char && userInput[idx] !== undefined,
+                    'text-black': userInput[idx] === undefined,
+                }"
+                >{{ char }}</span
+            >
         </div>
         <input
             v-model="userInput"
