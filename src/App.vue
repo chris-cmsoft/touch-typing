@@ -9,37 +9,23 @@ const highlightedText = computed(() => {
         .split('')
         .map((char, idx) => {
             const isCorrect = userInput.value[idx] === char
-            return `<span style=\"color:${isCorrect ? 'green' : 'black'}\">${char}</span>`
+            // Use Tailwind classes for color
+            return `<span class=\"${isCorrect ? 'text-green-600' : 'text-black'}\">${char}</span>`
         })
         .join('')
 })
 </script>
 
 <template>
-    <div
-        style="
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 24px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: #fff;
-        "
-    >
-        <h2>Typing Practice</h2>
-        <div style="font-size: 1.5em; font-family: 'Fira Mono', monospace; margin-bottom: 24px">
+    <div class="max-w-2xl mx-auto mt-10 p-6 border border-gray-300 rounded-lg bg-white shadow">
+        <h2 class="text-2xl font-bold mb-6">Typing Practice</h2>
+        <div class="text-xl font-mono mb-6">
             <span v-html="highlightedText"></span>
         </div>
         <input
             v-model="userInput"
             type="text"
-            style="
-                width: 100%;
-                font-size: 1.2em;
-                padding: 8px;
-                border-radius: 4px;
-                border: 1px solid #aaa;
-            "
+            class="w-full text-lg p-2 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             :maxlength="targetText.length"
             placeholder="Start typing..."
         />
