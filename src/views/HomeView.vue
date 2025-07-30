@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { targetTexts } from '@/data/targetTexts'
 
 type Status = 'correct' | 'incorrect' | 'fixed'
 
@@ -8,7 +9,7 @@ interface CharStatus {
     state: Status
 }
 
-const targetText = 'Giant pandas live in the temperate zone bamboo forests of central China.'
+const targetText = targetTexts[Math.floor(Math.random() * targetTexts.length)]
 const userInput = ref('')
 const typedCharacters = ref<CharStatus[]>([])
 const targetChars = targetText.split('')
@@ -34,7 +35,6 @@ function onInputChange() {
             typedCharacters.value[i] = { char: userInput.value[i], state }
         }
     }
-    console.log(typedCharacters.value)
 }
 </script>
 
