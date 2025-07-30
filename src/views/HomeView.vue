@@ -15,7 +15,7 @@ const userInput = ref('')
 const typedCharacters = ref<CharStatus[]>([])
 const targetChars = ref(targetText.value.split(''))
 
-function onInputChange(e: Event) {
+function onInputChange() {
     for (let i = 0; i < userInput.value.length; i++) {
         let state: Status
         if (targetChars.value[i] === userInput.value[i]) {
