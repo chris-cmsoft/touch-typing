@@ -10,7 +10,7 @@ const targetChars = targetText.split('')
 <template>
     <div class="max-w-2xl mx-auto mt-10 p-6 border border-gray-300 rounded-lg bg-white shadow">
         <h2 class="text-2xl font-medium mb-6">Typing Practice</h2>
-        <div class="text-xl font-light mb-6 flex flex-wrap gap-0.5">
+        <div class="text-xl font-light mb-6">
             <span
                 v-for="(char, idx) in targetChars"
                 :key="idx"
